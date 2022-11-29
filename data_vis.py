@@ -44,7 +44,8 @@ def data_vis (x):
     else :
         return(x)
     
-    
+#Needs some work in the linear regression but is a good enough start
+
 
 
 
