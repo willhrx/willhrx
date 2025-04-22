@@ -61,3 +61,29 @@ axs[1, 1].grid(alpha=0.4, linestyle='--')
 
 plt.tight_layout()
 plt.show()
+
+print('The expected probability of rolling a 2 is 0.0277777...')
+print('The probability of getting a 2 after 20 rolls is ' + str(mc_dice_rolls(n = 20)[0]))
+print('The probability of getting a 2 after 100 rolls is ' + str(mc_dice_rolls(n = 100)[0]))
+print('The probability of getting a 2 after 500 rolls is ' + str(mc_dice_rolls(n = 500)[0]))
+print('The probability of getting a 2 after 10000 rolls is ' + str(mc_dice_rolls(n = 10000)[0]))
+
+"""
+As simple as this case is, I feel it really demonstrates the power and potential of the monte
+carlo method. As the number of trials rises, both the overall probability distributuion moves 
+closer and closer to the expected probability distribution and I feel like I can already see 
+how powerful this could be when put to more complex cases.
+"""
+
+
+
+
+
+
+
+
+
+
+
+
+
