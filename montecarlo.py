@@ -29,31 +29,35 @@ def mc_dice_rolls(n = 10):
 
 x = np.arange(2, 13)
 
+fig, axs = plt.subplots(2, 2, figsize = (10, 6))
+
 #Plotting for n = 20
-plt.bar(x, mc_dice_rolls(n = 20), color = 'dodgerblue')
-plt.title('Montecarlo simulation of rolling 2 dice (n = 20)')
-plt.xlabel('Sums of the rolls')
-plt.ylabel('Probabilities of each outcome')
-plt.grid(alpha=0.4, linestyle='--')
+axs[0,0].bar(x, mc_dice_rolls(n = 20), color = 'dodgerblue')
+axs[0, 0].set_title('Montecarlo simulation of rolling 2 dice (n = 20)')
+axs[0, 0].set_xlabel('Sums of the rolls')
+axs[0, 0].set_ylabel('Probabilities of each outcome')
+axs[0,0].grid(alpha=0.4, linestyle='--')
 
 #Plotting for n = 100
-plt.bar(x, mc_dice_rolls(n = 100), color = 'dodgerblue')
-plt.title('Montecarlo simulation of rolling 2 dice (n = 100)')
-plt.xlabel('Sums of the rolls')
-plt.ylabel('Probabilities of each outcome')
-plt.grid(alpha=0.4, linestyle='--')
+axs[0,1].bar(x, mc_dice_rolls(n = 100), color = 'deepskyblue')
+axs[0, 1].set_title('Montecarlo simulation of rolling 2 dice (n = 100)')
+axs[0, 1].set_xlabel('Sums of the rolls')
+axs[0, 1].set_ylabel('Probabilities of each outcome')
+axs[0,1].grid(alpha=0.4, linestyle='--')
 
 #Plotting for n = 500
-plt.bar(x, mc_dice_rolls(n = 500), color = 'dodgerblue')
-plt.title('Montecarlo simulation of rolling 2 dice (n = 500)')
-plt.xlabel('Sums of the rolls')
-plt.ylabel('Probabilities of each outcome')
-plt.grid(alpha=0.4, linestyle='--')
+axs[1,0].bar(x, mc_dice_rolls(n = 500), color = 'forestgreen')
+axs[1, 0].set_title('Montecarlo simulation of rolling 2 dice (n = 500)')
+axs[1, 0].set_xlabel('Sums of the rolls')
+axs[1, 0].set_ylabel('Probabilities of each outcome')
+axs[1,0].grid(alpha=0.4, linestyle='--')
 
 #Plotting for n = 10000
-plt.bar(x, mc_dice_rolls(n = 10000), color = 'dodgerblue')
-plt.title('Montecarlo simulation of rolling 2 dice (n = 10000)')
-plt.xlabel('Sums of the rolls')
-plt.ylabel('Probabilities of each outcome')
-plt.grid(alpha=0.4, linestyle='--')
+axs[1, 1].bar(x, mc_dice_rolls(n = 10000), color = 'mediumaquamarine')
+axs[1, 1].set_title('Montecarlo simulation of rolling 2 dice (n = 10000)')
+axs[1, 1].set_xlabel('Sums of the rolls')
+axs[1, 1].set_ylabel('Probabilities of each outcome')
+axs[1, 1].grid(alpha=0.4, linestyle='--')
 
+plt.tight_layout()
+plt.show()
