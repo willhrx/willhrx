@@ -46,8 +46,8 @@ axs[0, 1].set_ylabel('Probabilities of each outcome')
 axs[0,1].grid(alpha=0.4, linestyle='--')
 
 #Plotting for n = 500
-axs[1,0].bar(x, mc_dice_rolls(n = 500), color = 'forestgreen')
-axs[1, 0].set_title('Montecarlo simulation of rolling 2 dice (n = 500)')
+axs[1,0].bar(x, mc_dice_rolls(n = 1000), color = 'forestgreen')
+axs[1, 0].set_title('Montecarlo simulation of rolling 2 dice (n = 1000)')
 axs[1, 0].set_xlabel('Sums of the rolls')
 axs[1, 0].set_ylabel('Probabilities of each outcome')
 axs[1,0].grid(alpha=0.4, linestyle='--')
@@ -72,8 +72,29 @@ print('The probability of getting a 2 after 10000 rolls is ' + str(mc_dice_rolls
 As simple as this case is, I feel it really demonstrates the power and potential of the monte
 carlo method. As the number of trials rises, both the overall probability distributuion moves 
 closer and closer to the expected probability distribution and I feel like I can already see 
-how powerful this could be when put to more complex cases.
+how powerful this could be when put to more complex cases. Now let's find see if we can apply
+these principals to an option pricing model.
+
+
+I'll begin with giving a quick explannation of what a european option is. This is a financial
+instrument that gives the buyer the option to either buy (call) or sell (put) an underlying asset
+for a specified price (strike price) at a specified time in the future (expiration time), not 
+earlier, as is allowed with an american-type option.
+Our task is to calculate a fair price for this option based on what we know about the nature of
+the underlying financial asset.
+
+To begin, I think we should take a look at the price of a stock and watch how it chages over the 
+course of a year.
 """
+
+#Downloading ohlcv data on AMZN stock
+
+import yfinance as yf 
+
+ohlcv_data = yf.download(tickers = 'AAPL', period='1y', interval='1d')
+
+
+
 
 
 
