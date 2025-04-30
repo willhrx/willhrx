@@ -91,10 +91,30 @@ course of a year.
 
 import yfinance as yf 
 
-ohlcv_data = yf.download(tickers = 'AAPL', period='1y', interval='1d')
+apple = yf.Ticker("AAPL")
+ohlcv_data = apple.history(period='1y', interval='1d')
 
+prices = ohlcv_data['Close']
+dates = ohlcv_data.index
 
+#Plot of the prices
 
+plt.figure(figsize=(10, 6))
+plt.plot(dates, prices, color = 'dodgerblue')
+plt.title(label = 'Daily AAPL stock prices over the past year')
+plt.ylabel(ylabel = 'Prices')
+plt.xlabel(xlabel = 'Dates')
+plt.grid(alpha = 0.4)
+plt.show()
+
+"""
+From looking at this plot, I feel like you get a good sense of two of the main characteristics
+that are used to quantifiably model the movement of stock prices: the volatility and the overall
+direction.
+
+A common way of modelling the movement of stock prices is with an Ito process, it is very rubust
+and will we start off using a version of it to start off with.
+"""
 
 
 
