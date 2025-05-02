@@ -102,7 +102,7 @@ dates = ohlcv_data.index
 plt.figure(figsize=(10, 6))
 plt.plot(dates, prices, color = 'dodgerblue')
 plt.title(label = 'Daily AAPL stock prices over the past year')
-plt.ylabel(ylabel = 'Prices')
+plt.ylabel(ylabel = 'Prices (USD)')
 plt.xlabel(xlabel = 'Dates')
 plt.grid(alpha = 0.4)
 plt.show()
@@ -115,6 +115,47 @@ direction.
 A common way of modelling the movement of stock prices is with an Ito process, it is very rubust
 and will we start off using a version of it to start off with.
 """
+
+
+#Calculating log change
+ohlcv_data['Log Change'] = np.log(ohlcv_data['Close']/ohlcv_data['Close'].shift(-1))
+ohlcv_data['Change'] = ohlcv_data['Close'].pct_change()
+
+AAPL_mean = ohlcv_data['Change'].mean()
+AAPL_vol = ohlcv_data['Change'].std()
+
+"""
+So an Ito process is defined as:
+dX = b(X, t)dt + a(X, t)dWt
+where X is the process, t is the time increment and Wt is a Wiener process (brownian motion).
+
+A function of this form has many properties and I will not be getting into the details of them
+right now, I'll just be starting with a basic form of this process:    
+
+dX = X(1 + mean) dt + t * vol dWt
+
+so X_t+1 is normally distributed with a mean of X_t(1 + AAPL_mean) and standard deviation of
+AAPL_vol * X_t
+"""
+
+def AAPL_ito(n_0, n):
+    y = [n_0]
+    for i in range(n -1):
+        y.append(y[-1] * (1 + AAPL_mean) + np.random.normal(loc = 0, scale = AAPL_vol * y[-1]))
+    return(y)
+
+ito = AAPL_ito(n_0 = prices[0], n = len(prices))
+
+#Plot of the process against the actual prices
+
+plt.figure(figsize=(10, 6))
+plt.plot(dates, prices, color = 'dodgerblue')
+plt.plot(dates, ito, color = 'dimgrey')
+plt.title(label = 'Daily AAPL stock prices over the past year against Ito Process')
+plt.ylabel(ylabel = 'Prices (USD)')
+plt.xlabel(xlabel = 'Dates')
+plt.grid(alpha = 0.4)
+plt.show() 
 
 
 
