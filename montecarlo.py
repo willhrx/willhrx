@@ -147,7 +147,6 @@ def AAPL_ito(n_0, n):
 ito = AAPL_ito(n_0 = prices[0], n = len(prices))
 
 #Plot of the process against the actual prices
-
 plt.figure(figsize=(10, 6))
 plt.plot(dates, prices, color = 'dodgerblue')
 plt.plot(dates, ito, color = 'dimgrey')
@@ -157,7 +156,19 @@ plt.xlabel(xlabel = 'Dates')
 plt.grid(alpha = 0.4)
 plt.show() 
 
+"""
+So the idea is to run a large number of simulations of future prices using the stochacstic model
+we've made to determine a fair price for an option.
+"""
 
+def AAPL_mc(x, k, n):
+    price = 0
+    for i in range(n):
+        AAPL = prices[-1]
+        for j in range(x):
+            AAPL = AAPL * (1 + AAPL_mean) + np.random.normal(loc = 0, scale = AAPL_vol * AAPL)
+        price += max(0, AAPL - x)/n
+    return(price)
 
 
 
