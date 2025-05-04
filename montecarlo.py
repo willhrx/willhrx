@@ -10,8 +10,9 @@ my days at uni so i though it might be fun to revisit the concepts and have a pl
 
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.stats import norm
+import scipy.stats as stats
 import random
+import datetime
 
 """
 My initial memory of monte carlo methods comes initially from using it to compute complex 
@@ -167,15 +168,47 @@ def AAPL_mc(x, k, n):
         AAPL = prices[-1]
         for j in range(x):
             AAPL = AAPL * (1 + AAPL_mean) + np.random.normal(loc = 0, scale = AAPL_vol * AAPL)
-        price += max(0, AAPL - x)/n
+        price += max(0, AAPL - k)/n
     return(price)
 
+def blackscholes (X, S, t, v, r):
+    d1 = (np.log(S/X) + (r + (v**2/2))*t)/(v*np.sqrt(t))
+    d2 = d1 - v*np.sqrt(t)
+    C = S*stats.norm.cdf(d1) - X*np.exp(-r*t)*stats.norm.cdf(d2)
+    P = X*np.exp(-r*t)*stats.norm.cdf(-d2) - S*stats.norm.cdf(-d1)
+    return(C, P)
 
+mc_call = AAPL_mc(100, 200, 100000)
+bs_call = blackscholes( 200, S = prices[-1], t = 100/252, v = AAPL_vol, r = 0)[0]
 
+print('Price according to the Black-Scholes pricing model: '+ str(bs_call))
+print('Price according to the Monte-Carlo pricing model: '+ str(mc_call))
 
+"""
+This is a good start, it seems clear that the monte carlo pricing model values the 200 AAPL call 
+with 6 days to expiration quite a bit more than the black scholes model does. There is still quite
+bit that can be done to improve our monte carlo pricing model.
+Our current function is very computationally intense for large n, and takes a long time as it is
+simulating the full path of the stock n times rather than just giving n different outcomes.
+"""
 
+sim_dates = [dates[-1] + datetime.timedelta(days=i) for i in range(100)]
 
+#Plot of 100 processes
+plt.figure(figsize=(10, 6))
+for i in range(100):
+    plt.plot(sim_dates, AAPL_ito(n_0 = prices[-1], n = 100 ), color = (random.random(), random.random(), random.random()))
+plt.title(label = 'Simulartion of 100 prices 100 days into the future')
+plt.ylabel(ylabel = 'Prices (USD)')
+plt.xlabel(xlabel = 'Dates')
+plt.grid(alpha = 0.4)
+plt.show() 
 
+"""
+Our pricing model is going through every single point on that graph when all we are interested in
+is the last value or the price at expiration, which according to the model, should be centred 
+around  
+"""
 
 
 
