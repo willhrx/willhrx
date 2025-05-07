@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 import scipy.stats as stats
 import random
 import datetime
+from numpy.random import randn
 
 """
 My initial memory of monte carlo methods comes initially from using it to compute complex 
@@ -204,11 +205,21 @@ plt.xlabel(xlabel = 'Dates')
 plt.grid(alpha = 0.4)
 plt.show() 
 
-"""
-Our pricing model is going through every single point on that graph when all we are interested in
-is the last value or the price at expiration, which according to the model, should be centred 
-around  
-"""
+k = 170
+def AAPL_mc_2(n, t, k):
+    stocks = prices[-1]*np.exp((AAPL_mean - (AAPL_vol**2)/2) * t + AAPL_vol*t*randn(n))
+    options = [max(0, x - k) for x in stocks]
+    return(np.mean(options))
+
+
+
+
+
+
+
+
+
+
 
 
 
