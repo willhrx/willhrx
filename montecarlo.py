@@ -180,7 +180,7 @@ def blackscholes (X, S, t, v, r):
     return(C, P)
 
 mc_call = AAPL_mc(100, 200, 100000)
-bs_call = blackscholes( 200, S = prices[-1], t = 100/252, v = AAPL_vol, r = 0)[0]
+bs_call = blackscholes( 200, S = prices[-1], t = 100/252, v = AAPL_vol * np.sqrt(252), r = 0)[0]
 
 print('Price according to the Black-Scholes pricing model: '+ str(bs_call))
 print('Price according to the Monte-Carlo pricing model: '+ str(mc_call))
@@ -207,12 +207,14 @@ plt.show()
 
 k = 170
 def AAPL_mc_2(n, t, k):
-    stocks = prices[-1]*np.exp((AAPL_mean - (AAPL_vol**2)/2) * t + AAPL_vol*t*randn(n))
+    stocks = prices[-1]*np.exp((AAPL_mean - (AAPL_vol**2)/2) * t + AAPL_vol*np.sqrt(t)*randn(n))
     options = [max(0, x - k) for x in stocks]
     return(np.mean(options))
 
-
-
+#Compairing new estimates
+print('Black-Scholes estimate: ' + blackscholes( 170, S = prices[-1], t = 15/252, v = AAPL_vol*np.sqrt(252), r = 0)[0])
+print('Monte Carlo estimate (n = 10000): ' + AAPL_mc_2(n = 10000, t = 15, k = 170))
+print('Monte Carlo estimate (n = 1000000): ' + AAPL_mc_2(n = 1000000, t = 15, k = 170))
 
 
 
